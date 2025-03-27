@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+</head>
+
+<body>
+    <div>
+        <a href="/"><button class="out">Sign out</button></a>
+    </div>
+
+    <div>
+        {% if picture=="default" %}
+            <img src="{{url_for('static',filename='images/default.jpg')}}" class="Picture">
+        {% else %}
+            <img src="{{url_for('service.get_image',id=id)}}" class="Picture">
+        {% endif %}
+        <a href="/profile/{{id}}/true/{{id}}/0"><button class="viewProfile">View My Profile</button></a>
+        <a href="/messages/{{id}}"><button class="viewProfile1">View messages</button></a>
+        <button class="addListing" onclick="document.getElementById('box').style.display='grid'">Add a listing</button>
+    </div>
+    <div class="listings" style="height:100vh;display: flex;flex-wrap: wrap;">
+        
+        {% if listings %}
+            {% for listing in listings %}
+                <div class="announce" style="display: flexbox;">
+                    <img src="{{url_for('service.get_image_prod',id=listing['gen_id'])}}" class="PProduct"><br>
+                    title: {{ listing['product_name'] }}<br>
+                    <a href="/profile/{{listing['user']}}/false/{{id}}/0">username:{{ listing['username'] }}</a><br>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no_display">No listings to display</div>
+        {% endif %}
+        <div class="paginate" style="top:60rem;">
+            {% if  page >0 %}
+                <a href="{{ url_for('service.main',id=id,page=page-1) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Previous page</button></a>
+                <a href="{{ url_for('service.main',id=id,page=page+1) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Next page</button></a>
+            {% else %}
+                <a href="{{ url_for('service.main',id=id,page=page) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Previous page</button></a>
+                <a href="{{ url_for('service.main',id=id,page=page+1) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Next page</button></a>
+            {% endif %}
+        </div>
+    </div>
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="popup"  style="position: absolute; top:15rem;height:12vh;width:20vw;left:5%;justify-content: center;" id="pop" >
+                        <br><br>{{ message }}
+                        <img class='x' src="{{url_for('static',filename='images/x.png')}}" style="width: 5%;border-radius: 4rem;position: absolute;top:1rem;right: 1rem;background-color: red;" onclick="document.getElementById('pop').style.display='none'">
+                    </div>  
+                {% endfor %}
+            {% endif %}
+    {% endwith %}
+    <div class="ListingBox" id="box" style="display: none;padding: 1%">
+
+        <form method="POST" autocomplete="off" enctype="multipart/form-data" style="background-color: black;height: 50%;margin: 2%">
+            <img src="{{url_for('static',filename='images/x.png')}}" style="position: absolute;right: 3%;width: 3%;height:3%" onclick="document.getElementById('box').style.display='none'"><br>
+            <text style="background-color: black;">Add a picture of the product</text> <input name="photo" type="file" class="upload_listing" style="margin-left: 3%;background-color: whitesmoke;" type="file"><br><br<br><br>
+            <text style="background-color: black;">Add the title of the product</text> <br><br><input name="title" class="add_title" style="background-color: whitesmoke;width: 30vw;height: 5vh;" type="text"><br><br><br>
+            <text style="background-color: black;">Add a price </text><input class="add_price" name="price" type="text" style="width: 20%;background-color: whitesmoke;"><br><br><br>
+            <text style="background-color: black;">Add description of the product</text> <br><br><input name="description" class="add_description" style="background-color: whitesmoke;width: 30vw;height:10vh ;" type="text"><br><br><br>
+            <button class="upl" style="width: 30%;height: 15%;" onclick="document.getElementById('box').style.display='none'">Upload listing</button>
+        </form>
+
+    </div>
+
+
+</body>
+
+</html>

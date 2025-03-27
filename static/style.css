@@ -1,0 +1,539 @@
+*{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background-color: #DBD8C4;
+}
+
+
+.welcome {
+    margin-top: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.welcome .imgLog {
+    max-width: 20%;
+    max-height: 20%;
+    margin-right: 20px; /* Adds some space between the image and description */
+}
+.description {
+    font-size: 18px;
+    max-width: 60%;
+}
+
+.catch{
+    font-size: 250%;
+    font-weight: bold;
+    color:#0000ff
+}
+
+.lower{
+    margin-top: 3%;
+    font-size: 150%;
+}
+
+.buttons1{
+    position: absolute;
+    top:4%;
+    right: 4%;
+    width: 6%;
+    height: 6%;
+    color: #0000ff;
+    background-color: white;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    transition: ease 0.6s;
+}
+
+.buttons1:hover{
+    color: white;
+    background-color: #0000ff;
+}
+
+.buttons2{
+    position: absolute;
+    top:4%;
+    right:12.5%;
+    width: 6%;
+    height: 6%;
+    background-color: #0000ff;
+    color:white;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    transition: ease 0.6s;
+}
+.buttons2:hover{
+    color:#0000ff;
+    background-color: white;
+}
+
+.miniMarket .market{
+    position: absolute;
+    left: 15%;
+    margin-top: 5%;
+    width: 10%;
+    height: 14%;
+    border-radius: 4rem;
+}
+
+
+.marketD{
+    font-size: 100%;
+    position: absolute;
+    left: 13%;
+    top:78%
+}
+
+
+.miniCustomer .customer{
+    position: absolute;
+    left: 35%;
+    margin-top: 5%;
+    width: 10%;
+    height: 14%;
+}
+
+
+.customerD{
+    font-size: 100%;
+    position: absolute;
+    left: 35%;
+    top:78%
+}
+
+
+.miniDolar .dolar{
+    position: absolute;
+    left: 55%;
+    margin-top: 5%;
+    width: 10%;
+    height: 14%;
+}
+
+
+.dolarD{
+    font-size: 100%;
+    position: absolute;
+    left: 53%;
+    top:78%
+}
+
+.miniEco .eco{
+    position: absolute;
+    left: 76%;
+    margin-top: 5%;
+    width: 10%;
+    height: 14%;
+}
+
+
+.ecoD{
+    font-size: 100%;
+    position: absolute;
+    left: 75%;
+    top:78%
+}
+
+.form1{
+    justify-content: center;
+    margin-bottom: 4%;
+    text-align: center;
+    width: 30%;
+    height: 40%;
+    margin-left: 35%;
+}
+
+.Log{
+    max-width: 60%;
+    max-height: 60%;
+}
+
+.SIGN{
+    margin: 5%;
+    width: 40%;
+    padding: 4%;
+    height: 24%;
+    background-color: #0000ff;
+    color:white;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    transition: ease 0.6s;
+}
+
+.SIGN:hover{
+    background-color: white;
+    color: #0000ff;
+}
+
+.popup{
+    justify-content: center;
+    text-align: center;
+    border: 0.2rem solid red;
+    background-color: red;
+    color:black;
+    border-radius: 0.2rem;
+    margin-left: 30rem;
+    margin-right: 30rem;
+    padding: 1rem;
+    display:flex;
+}
+
+.out{
+    position: absolute;
+    top:4%;
+    right: 4%;
+    width: 6%;
+    height: 6%;
+    color: white;
+    background-color: red;
+    border: 0.1rem solid white;
+    border-radius: 10%;
+    transition: ease 0.6s;
+}
+
+.out:hover{
+    color: red;
+    background-color: white;
+}
+
+.viewProfile{
+    position: absolute;
+    top:10%;
+    left: 22%;
+    width: 10%;
+    height: 6%;
+    background-color: #0000ff;
+    color:white;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    transition: ease 0.6s;
+}
+.viewProfile:hover{
+    color:#0000ff;
+    background-color: white;
+}
+
+.addListing{
+    position: absolute;
+    top:10%;
+    left:46%;
+    width: 10%;
+    height: 6%;
+    background-color: green;
+    color:white;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    transition: ease 0.6s;
+}
+
+.addListing:hover{
+    color: green;
+    background-color: white;
+}
+
+.viewProfile1{
+    position: absolute;
+    top:10%;
+    left: 34%;
+    width: 10%;
+    height: 6%;
+    background-color: #0000ff;
+    color:white;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    transition: ease 0.6s;
+}
+.viewProfile1:hover{
+    color:#0000ff;
+    background-color: white;
+}
+
+
+
+.Picture{
+    border-radius: 50%;
+    width: 15%;
+    height: 15%;
+    position: absolute;
+    top:2%;
+    left:4%;
+}
+
+.ProfileInfo{
+    padding: 3%;
+    text-align: center;
+    justify-content: center;
+    position: absolute;
+    top:5%;
+    left: 33%;
+}
+
+.Pic{
+    border-radius: 50%;
+    width:20rem;
+    height: 20rem;
+    float: right;
+}
+
+.About{
+    justify-content: left;
+    margin: 3%;
+    padding: 6%;
+    width: max-content;
+}
+
+.Listings{
+    position: absolute;
+    top:103%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    padding: 2%;
+    width: 90%;
+    border: 0.2rem solid black;
+    border-radius: 10%;
+    background-color: white;
+}
+
+.edit{
+    background-color: #0000ff;
+    color:white;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    padding: 1%;
+    margin: 2%;
+    transition: ease 0.6s;
+}
+
+.edit:hover{
+    color:#0000ff;
+    background-color: white;
+}
+
+.save{
+    background-color: green;
+    color:white;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    padding: 1%;
+    margin: 2%;
+    transition: ease 0.6s;
+}
+
+.save:hover{
+    color:green;
+    background-color: white;
+}
+
+.chat-container{
+    margin: 2%;
+    width:165vh;
+    height: 70vh;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    padding: 1%;
+}
+
+.compose{
+    position: absolute;
+    right: 8%;
+}
+
+.your-chats{
+    width: 50vh;
+    height: 58vh;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    padding: 1%;
+    margin: 2%;
+    background-color: white;
+}
+
+.chat{
+    border: 0.1rem solid black;
+    border-color: black;
+    margin: 5%;
+    padding: 3%;
+    border-radius: 10%;
+}
+
+.start-convo{
+    display:none;
+    width: 30vw;
+    position: absolute;
+    left:40%;
+    margin-top: 2%;
+    
+}
+
+.avgButton{
+    background-color: #0000ff;
+    color:white;
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    transition: ease 0.6s;
+}
+.avgButton:hover{
+    color:#0000ff;
+    background-color: white;
+}
+
+
+.chat_box{
+    border: 0.1rem solid black;
+    background-color: white;
+    color: black;
+    position: absolute;
+    top:35%;
+    left:40%;
+    width:50% ;
+    height: 40%;
+}
+
+.chat_box2{
+    color: black;
+    display: grid;
+    width:50% ;
+    height: 50%;
+    margin: 5%;
+}
+
+.me{
+    background-color: white;
+    color: black;
+    text-wrap: wrap;
+    left: 30%;
+    margin-top: 2.5%;
+    margin-left:2% ;
+    padding: 1%;
+}
+
+.you{
+    background-color: white;
+    color: black;
+    text-wrap: wrap;
+    right: 30%;
+    margin-top: 2.5%;
+    margin-left:2% ;
+    padding: 1%; 
+}
+
+
+.writeMessage{
+    background-color: white;
+    color: black;
+    display:inline;
+    width:50% ;
+    height: 50%;
+    margin: 5%;
+}
+
+.listings{
+    width: 80vw;
+    margin-top: 14%;
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 70vh;
+    background-color: white;
+    border: 1rem solid black;
+    border-radius: 1rem;
+}
+
+.ListingBox{
+    width: 45vw;
+    height: 70vh;
+    position: absolute;
+    top:5vh;
+    left:32%;
+    background-color: black;
+    color: white;
+    display: grid;
+}
+
+.upload_listing{
+    background-color: white;
+    color:black;
+    height: min-content;
+    width: min-content;
+    padding: 1%;
+}
+
+.add_title{
+    background-color: white;
+    color:black;
+    padding: 1%;
+}
+
+.add_description{
+    background-color: white;
+    color: black;
+    padding: 1%;
+}
+
+.add_price{
+    background-color: white;
+    color: black;
+    width: 50%;
+    padding: 1%;
+}
+
+.upl{
+    justify-content: center;
+    margin: auto;
+    border-radius: 1rem;
+    border: 1rem solid green;
+    background-color: green;
+    color: white;
+    position: absolute;
+    left: 30%;
+    transition: ease 0.6s;
+}
+
+.upl:hover{
+    background-color: greenyellow;
+    border: greenyellow;
+    color: whitesmoke;
+}
+
+.announce{
+    background-color: white;
+    border: 1rem solid green;
+    border-radius: 1rem;
+    margin: 3%;
+    padding: 2%;
+    max-width: 20vw;
+    text-wrap: pretty;
+    max-height: 30vh;
+    height: max-content;
+    width: max-content;
+}
+
+.PProduct{
+    width: 10vw;
+    height: 8vw;
+}
+
+.paginate{
+    background-color: white;
+    display: flex;
+    bottom: 2%;
+    right:38%;
+    left:38%;
+    position: absolute;
+}
+
+.pageBtn{
+    border: 1rem solid black;
+    background-color: black;
+    color: white;
+    padding: 3%;
+    margin: 3%;
+    width: 10vw;
+    height: 6vh;
+}
+
+.no_display{
+    background-color: white;
+    justify-content: center;
+    margin: auto;
+    padding: 3%;
+}

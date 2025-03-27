@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+</head>
+
+<body>
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="popup"  style="position: absolute; top:15rem;height:12vh;width:20vw;left:5%;justify-content: center;" id="pop" >
+                        <br><br>{{ message }}
+                        <img class='x' src="{{url_for('static',filename='images/x.png')}}" style="width: 5%;border-radius: 4rem;position: absolute;top:1rem;right: 1rem;background-color: red;" onclick="document.getElementById('pop').style.display='none'">
+                    </div>  
+                {% endfor %}
+            {% endif %}
+    {% endwith %}
+
+    {% if bool=='true' %}
+        <a href="/home/{{id}}/0"><img src="{{url_for('static',filename='images/home.png')}}" style="width: 5%;height: 5%;margin: 3%;"></a>
+    {% else %}
+        <a href="/home/{{inc}}/0"><img src="{{url_for('static',filename='images/home.png')}}" style="width: 5%;height: 5%;margin: 3%;"></a>
+        
+    {% endif %}
+    <div class="ProfileInfo">
+        {% if picture=="default" %}
+            <img src="{{url_for('static',filename='images/default.jpg')}}" class="Pic">
+        {% else %}
+            <img src="{{url_for('service.get_image',id=id)}}" class="Pic">
+        {% endif %}
+        <br>
+        <div class="About">
+            <form method="POST" name="info" autocomplete="off" enctype="multipart/form-data">
+                <div style="margin: 2%;">
+                    <button class="edit" type="button" onclick="editInfo()">Edit My information</button>
+                    <button class="save" type="submit" onclick="saveInfo()">Save Changes</button>
+                </div>
+                <div style="border: 0.2rem solid black;border-radius: 20%;padding: 5%;">
+                    Username: <input value="{{username}}" name="username" id="username" style="margin: 2%;padding: 1%;background-color: white;width: 44%;height: 2%;" readonly><br>
+                    Email: <input value="{{email}}" name="email" id="email" style="margin: 2%;padding: 1%;background-color: white;width: 50%;height: 2%;" readonly><br>
+                    About information:<br>
+                    <textarea style="margin: 2%;padding: 1%;background-color: white;width: 80%;resize: none;" rows="7" name="about" id="about" readonly>{{about}}</textarea><br>
+                    Profile Picture: <input type="file" name="profile_image">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div style="position: absolute;top:98%;margin-left: 3%;margin-top: 3%;">Your Listings</div><br>
+    <div class="Listings" style="height:100vh;display: flex;flex-wrap: wrap;">
+        {% if my_listings %}
+            {% for listing in my_listings %}
+                {% if bool!='true' %}
+                    <div class="announce" style="display: flexbox;">
+                        <img src="{{url_for('service.get_image_prod',id=listing['gen_id'])}}" class="PProduct"><br>
+                        title: {{ listing['product_name'] }}<br>
+                        username:{{ listing['username'] }}<br>
+                    </div>
+                {% else %}
+                    <div class="announce" id="announce" style="display: flex;">
+                        <form style="display: flexbox;text-wrap: wrap;background-color: white;width: 10vw;height: 20vh;">
+                            <a href="{{url_for('service.delete_product',del_id=listing['gen_id'],id=id,page=page,bool=bool,inc=inc)}}" onclick="document.getElementById('announce').style.display='none'"><img class='x' src="{{url_for('static',filename='images/x.png')}}" style="width: 10%;height: 10%;border-radius: 4rem;top:1%;float: right;background-color: white;"></a>
+                            <img src="{{url_for('service.get_image_prod',id=listing['gen_id'])}}" class="PProduct"><br>
+                            title: {{ listing['product_name'] }}<br>
+                            username:{{ listing['username'] }}<br>
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="no_display">No listing to display!</div>
+        {% endif %}
+        <div class="paginate">
+            {% if  page >0 %}
+                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page-1) }}" style="background-color: white;"><button class="pageBtn">Previous page</button></a>
+                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page+1) }}" style="background-color: white;"><button class="pageBtn">Next page</button></a>
+            {% else %}
+                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page) }}" style="background-color: white;"><button class="pageBtn">Previous page</button></a>
+                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page+1) }}" style="background-color: white;"><button class="pageBtn">Next page</button></a>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <script>
+
+        function editInfo(){
+            document.getElementById('username').readOnly=false
+            document.getElementById('email').readOnly=false
+            document.getElementById('about').readOnly=false
+        }
+        function saveInfo(){
+            document.getElementById('username').readOnly=true
+            document.getElementById('email').readOnly=true
+            document.getElementById('about').readOnly=true
+        }
+    </script>
+</body>
+
+</html>
