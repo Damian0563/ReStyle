@@ -5,6 +5,9 @@ from bson import ObjectId
 import random
 from uuid import uuid4
 from werkzeug.utils import secure_filename
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 service=Blueprint('service',__name__)
