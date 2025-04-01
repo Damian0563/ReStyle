@@ -72,10 +72,10 @@
         {% endif %}
         <div class="paginate">
             {% if  page >0 %}
-                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page-1) }}" style="background-color: white;"><button class="pageBtn">Previous page</button></a>
+                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page-1) }}" style="background-color: white;margin-right: 3%;"><button class="pageBtn">Previous page</button></a>
                 <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page+1) }}" style="background-color: white;"><button class="pageBtn">Next page</button></a>
             {% else %}
-                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page) }}" style="background-color: white;"><button class="pageBtn">Previous page</button></a>
+                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page) }}" style="background-color: white;margin-right: 3%;"><button class="pageBtn">Previous page</button></a>
                 <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page+1) }}" style="background-color: white;"><button class="pageBtn">Next page</button></a>
             {% endif %}
         </div>

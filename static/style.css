@@ -41,11 +41,12 @@
     background-color: white;
     border: 0.1rem solid black;
     border-radius: 10%;
-    transition: ease 0.6s;
+    transition: ease-in 0.6s;
 }
 
 .buttons1:hover{
     color: white;
+    transform: scale(1.05);
     background-color: #0000ff;
 }
 
@@ -59,10 +60,11 @@
     color:white;
     border: 0.1rem solid black;
     border-radius: 10%;
-    transition: ease 0.6s;
+    transition: ease-in 0.6s;
 }
 .buttons2:hover{
     color:#0000ff;
+    transform: scale(1.05);
     background-color: white;
 }
 
@@ -156,11 +158,12 @@
     color:white;
     border: 0.1rem solid black;
     border-radius: 10%;
-    transition: ease 0.6s;
+    transition: ease-in 0.6s;
 }
 
 .SIGN:hover{
     background-color: white;
+    transform: scale(1.05);
     color: #0000ff;
 }
 
@@ -192,6 +195,7 @@
 
 .out:hover{
     color: red;
+    transform: scale(1.05);
     background-color: white;
 }
 
@@ -264,7 +268,7 @@
     justify-content: center;
     position: absolute;
     top:5%;
-    left: 33%;
+    left: 30%;
 }
 
 .Pic{
@@ -301,11 +305,12 @@
     border-radius: 10%;
     padding: 1%;
     margin: 2%;
-    transition: ease 0.6s;
+    transition: ease-in 0.6s;
 }
 
 .edit:hover{
     color:#0000ff;
+    transform: scale(1.05);
     background-color: white;
 }
 
@@ -316,11 +321,12 @@
     border-radius: 10%;
     padding: 1%;
     margin: 2%;
-    transition: ease 0.6s;
+    transition: ease-in 0.6s;
 }
 
 .save:hover{
     color:green;
+    transform: scale(1.05);
     background-color: white;
 }
 
@@ -370,10 +376,11 @@
     color:white;
     border: 0.1rem solid black;
     border-radius: 10%;
-    transition: ease 0.6s;
+    transition: ease-in 0.6s;
 }
 .avgButton:hover{
     color:#0000ff;
+    transform: scale(1.05);
     background-color: white;
 }
 
@@ -526,9 +533,17 @@
     background-color: black;
     color: white;
     padding: 3%;
-    margin: 3%;
+    margin: 5%;
     width: 10vw;
     height: 6vh;
+    transition: 0.6s ease-in;
+}
+
+.pageBtn:hover{
+    transform: scale(1.05);
+    background-color: white;
+    border: 1rem solid white;
+    color: black;
 }
 
 .no_display{
