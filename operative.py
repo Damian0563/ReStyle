@@ -150,7 +150,7 @@ def profile(id,bool,inc,page):
         flash('Invalid request')
         return render_template('profile.html',id=id,picture=picture,username=username,email=email,about=about,img=img,my_listings=my_listings,inc=inc,page=0,bool=bool)
     for entry in entries:
-        if j>8*page:
+        if j>8*page or j==0:
             my_listings.append(entry)
             i+=1
             if i>page+7:
