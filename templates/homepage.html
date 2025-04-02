@@ -19,36 +19,43 @@
         </div>
     </div>
 
-    <div class="miniMarket">
-        <img src="{{url_for('static',filename='images/marketplace.png')}}" class="market">
-        <div class="marketD">
-            Discover diverse marketplace!
+    <div class="wrapper">
+        <div class="miniMarket">
+            <img src="{{url_for('static',filename='images/marketplace.png')}}" class="market">
+            <div class="marketD">
+                Discover diverse marketplace!
+            </div>
         </div>
+
+        <div class="miniCustomer">
+            <img src="{{url_for('static',filename='images/customer.png')}}" class="customer">
+            <div class="customerD">
+                Connect with others!
+            </div>
+        </div>
+
+        <div class="miniDolar">
+            <img src="{{url_for('static',filename='images/deals.png')}}" class="dolar">
+            <div class="dolarD">
+                Make transactions on your terms!
+            </div>
+        </div>
+
+        <div class="miniEco">
+            <img src="{{url_for('static',filename='images/eco-energy.png')}}" class="eco">
+            <div class="ecoD">
+                Wear second hand apparel!
+            </div>
     </div>
 
-    <div class="miniCustomer">
-        <img src="{{url_for('static',filename='images/customer.png')}}" class="customer">
-        <div class="customerD">
-            Connect with others!
-        </div>
-    </div>
 
-    <div class="miniDolar">
-        <img src="{{url_for('static',filename='images/deals.png')}}" class="dolar">
-        <div class="dolarD">
-            Make transactions on your terms!
-        </div>
-    </div>
-
-    <div class="miniEco">
-        <img src="{{url_for('static',filename='images/eco-energy.png')}}" class="eco">
-        <div class="ecoD">
-            Wear second hand apparel!
-        </div>
-    </div>
-
-
-
+    <style>
+        @media(max-width:724px){
+            .welcome{
+                margin-top: 15% !important;
+            }
+        }
+    </style>
 </body>
 
 </html>

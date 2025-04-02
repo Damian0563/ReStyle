@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.12
 
 # Set the working directory
 WORKDIR /app
@@ -14,8 +14,8 @@ COPY . .
 EXPOSE 5000
 
 # Set environment variables
-ENV FLASK_APP=app.py
+ENV FLASK_APP=innit.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
 # Command to run the application
-CMD ["flask", "run"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]

@@ -10,7 +10,7 @@
         <a href="/"><button class="out">Sign out</button></a>
     </div>
 
-    <div>
+    <div class="upper">
         {% if picture=="default" %}
             <img src="{{url_for('static',filename='images/default.jpg')}}" class="Picture">
         {% else %}
@@ -20,8 +20,8 @@
         <a href="/messages/{{id}}"><button class="viewProfile1">View messages</button></a>
         <button class="addListing" onclick="document.getElementById('box').style.display='grid'">Add a listing</button>
     </div>
-    <div class="listings" style="height:100vh;display: flex;flex-wrap: wrap;">
-        
+    <div class="listings"> 
+        <!-- style="height:100vh;display: flex;flex-wrap: wrap;" -->
         {% if listings %}
             {% for listing in listings %}
                 <div class="announce" style="display: flexbox;">
@@ -65,7 +65,6 @@
         </form>
 
     </div>
-
 
 </body>
 

@@ -3,7 +3,6 @@
     background-color: #DBD8C4;
 }
 
-
 .welcome {
     margin-top: 10%;
     display: flex;
@@ -11,6 +10,7 @@
     justify-content: center;
 }
 .welcome .imgLog {
+    margin-top: 0%;
     max-width: 20%;
     max-height: 20%;
     margin-right: 20px; /* Adds some space between the image and description */
@@ -67,8 +67,35 @@
     transform: scale(1.05);
     background-color: white;
 }
+.miniMarket, .miniCustomer, .miniDolar, .miniEco {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 5%;
+    width: 20%;
+}
 
-.miniMarket .market{
+.miniMarket img, .miniCustomer img, .miniDolar img, .miniEco img {
+    width: 80%;
+    height: auto;
+    border-radius: 2rem;
+}
+
+.marketD, .customerD, .dolarD, .ecoD {
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2%;
+    width: 100%;
+}
+/* .miniMarket .market{
     position: absolute;
     left: 15%;
     margin-top: 5%;
@@ -133,7 +160,7 @@
     position: absolute;
     left: 75%;
     top:78%
-}
+} */
 
 .form1{
     justify-content: center;
@@ -439,10 +466,21 @@
     margin-top: 14%;
     margin-left: 10%;
     margin-right: 10%;
-    height: 70vh;
+    height: 100vh;
     background-color: white;
     border: 1rem solid black;
     border-radius: 1rem;
+}
+
+.upper{
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 5%;
+}
+@media(max-width:900px){
+    .upper{
+        margin-bottom: 20% !important;
+    }
 }
 
 .ListingBox{
@@ -552,3 +590,5 @@
     margin: auto;
     padding: 3%;
 }
+
+
