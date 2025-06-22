@@ -3,87 +3,106 @@
 
 <head>
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <style>
+        .bg-white, .card, .border, .alert {
+            background-color: beige !important;
+        }
+        .home:hover{
+            background-color:#0000ff !important;
+        }
+    </style>
 </head>
 
-<body>
-    {% with messages = get_flashed_messages() %}
+<body class="min-vh-100" style="background-color: beige !important;">
+    <div class="container py-4" style="background-color: beige  !important;">
+        {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
-                    <div class="popup"  style="position: absolute; top:15rem;height:12vh;width:20vw;left:5%;justify-content: center;" id="pop" >
-                        <br><br>{{ message }}
-                        <img class='x' src="{{url_for('static',filename='images/x.png')}}" style="width: 5%;border-radius: 4rem;position: absolute;top:1rem;right: 1rem;background-color: red;" onclick="document.getElementById('pop').style.display='none'">
-                    </div>  
+                    <div class="d-flex justify-content-center my-3">
+                        <div class="popup alert alert-warning alert-dismissible fade show position-relative" id="pop" role="alert" style="max-width: 350px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                            <span style="background-color: red;color:black;display:block;width:100%;text-align:center;">{{ message }}</span>
+                            <img src="{{url_for('static',filename='images/x.png')}}" style="position:absolute;top:0.5rem;right:0.5rem;background-color: red;width:1.5rem;height:1.5rem;cursor:pointer;" onclick="this.closest('.popup').style.display='none'">
+                        </div>
+                    </div>
                 {% endfor %}
             {% endif %}
-    {% endwith %}
+        {% endwith %}
 
-    {% if bool=='true' %}
-        <a href="/home/{{id}}/0"><img src="{{url_for('static',filename='images/home.png')}}" style="width: 5%;height: 5%;margin: 3%;"></a>
-    {% else %}
-        <a href="/home/{{inc}}/0"><img src="{{url_for('static',filename='images/home.png')}}" style="width: 5%;height: 5%;margin: 3%;"></a>
-        
-    {% endif %}
-    <div class="ProfileInfo">
-        {% if picture=="default" %}
-            <img src="{{url_for('static',filename='images/default.jpg')}}" class="Pic">
-        {% else %}
-            <img src="{{url_for('service.get_image',id=id)}}" class="Pic">
-        {% endif %}
-        <br>
-        <div class="About">
-            <form method="POST" name="info" autocomplete="off" enctype="multipart/form-data">
-                <div style="margin: 2%;">
-                    <button class="edit" type="button" onclick="editInfo()">Edit My information</button>
-                    <button class="save" type="submit" onclick="saveInfo()">Save Changes</button>
-                </div>
-                <div style="border: 0.2rem solid black;border-radius: 20%;padding: 5%;">
-                    Username: <input value="{{username}}" name="username" id="username" style="margin: 2%;padding: 1%;background-color: white;width: 44%;height: 2%;" readonly><br>
-                    Email: <input value="{{email}}" name="email" id="email" style="margin: 2%;padding: 1%;background-color: white;width: 50%;height: 2%;" readonly><br>
-                    About information:<br>
-                    <textarea style="margin: 2%;padding: 1%;background-color: white;width: 80%;resize: none;" rows="7" name="about" id="about" readonly>{{about}}</textarea><br>
-                    Profile Picture: <input type="file" name="profile_image">
-                </div>
-            </form>
+        <div class="d-flex justify-content-between align-items-center mb-4" style="background-color: beige  !important;">
+            <a href="/home/{{id}}/0" {% if bool!='true' %} style="display:none;"{% endif %}><img src="{{url_for('static',filename='images/home.png')}}" id="home" style="width: 2rem; height: 2rem;background-color: beige !important;"></a>
+            <a href="/home/{{inc}}/0" {% if bool=='true' %} style="display:none;"{% endif %}><img src="{{url_for('static',filename='images/home.png')}}" id="home" style="width: 2rem; height: 2rem;background-color: beige !important;"></a>
         </div>
-    </div>
-    <div style="position: absolute;top:98%;margin-left: 3%;margin-top: 3%;">Your Listings</div><br>
-    <div class="Listings" style="height:100vh;display: flex;flex-wrap: wrap;">
-        {% if my_listings %}
-            {% for listing in my_listings %}
-                {% if bool!='true' %}
-                    <div class="announce" style="display: flexbox;">
-                        <img src="{{url_for('service.get_image_prod',id=listing['gen_id'])}}" class="PProduct"><br>
-                        title: {{ listing['product_name'] }}<br>
-                        username:{{ listing['username'] }}<br>
-                    </div>
+
+        <div class="row g-4 align-items-center mb-4" style="background-color: beige  !important;">
+            <div class="col-md-4 text-center" style="background-color: beige  !important;">
+                {% if picture=="default" %}
+                    <img src="{{url_for('static',filename='images/default.jpg')}}" class="Pic img-fluid rounded-circle border border-3 border-primary-subtle shadow" style="max-width: 220px;">
                 {% else %}
-                    <div class="announce" id="announce" style="display: flex;">
-                        <form style="display: flexbox;text-wrap: wrap;background-color: white;width: 10vw;height: 20vh;">
-                            <a href="{{url_for('service.delete_product',del_id=listing['gen_id'],id=id,page=page,bool=bool,inc=inc)}}" onclick="document.getElementById('announce').style.display='none'"><img class='x' src="{{url_for('static',filename='images/x.png')}}" style="width: 10%;height: 10%;border-radius: 4rem;top:1%;float: right;background-color: white;"></a>
-                            <img src="{{url_for('service.get_image_prod',id=listing['gen_id'])}}" class="PProduct"><br>
-                            title: {{ listing['product_name'] }}<br>
-                            username:{{ listing['username'] }}<br>
-                        </form>
-                    </div>
+                    <img src="{{url_for('service.get_image',id=id)}}" class="Pic img-fluid rounded-circle border border-3 border-primary-subtle shadow" style="max-width: 220px;">
                 {% endif %}
-            {% endfor %}
-        {% else %}
-            <div class="no_display">No listing to display!</div>
-        {% endif %}
-        <div class="paginate">
-            {% if  page >0 %}
-                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page-1) }}" style="background-color: white;margin-right: 3%;"><button class="pageBtn">Previous page</button></a>
-                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page+1) }}" style="background-color: white;"><button class="pageBtn">Next page</button></a>
+            </div>
+            <div class="col-md-8 rounded" style="background-color: beige  !important;border: 0.1rem solid black;">
+                <div class="card p-4 shadow-sm" style="background-color: beige !important;">
+                    <form method="POST" name="info" autocomplete="off" enctype="multipart/form-data" style="background-color: beige  !important;">
+                        <div class="mb-3 d-flex gap-2 rounded" style="background-color: white  !important;border: 0.1rem solid black;">
+                            <button class="edit btn btn-outline-primary" type="button" onclick="editInfo()">Edit My information</button>
+                            <button class="save btn btn-success" type="submit" onclick="saveInfo()">Save Changes</button>
+                        </div>
+                        <div class="border rounded-4 p-4 mb-2" style="background-color: beige !important;">
+                            <div class="mb-3" style="background-color: beige !important;">
+                                <label class="form-label fw-semibold" style="background-color: beige !important; ">Username:</label>
+                                <input value="{{username}}" name="username" id="username" class="form-control" readonly>
+                            </div>
+                            <div class="mb-3" style="background-color: beige  !important;">
+                                <label class="form-label fw-semibold" style="background-color: beige !important;"">Email:</label>
+                                <input value="{{email}}" name="email" id="email" class="form-control" readonly>
+                            </div>
+                            <div class="mb-3" style="background-color: beige  !important;">
+                                <label class="form-label fw-semibold" style="background-color: beige !important; ">About information:</label>
+                                <textarea class="form-control" rows="5" name="about" id="about" readonly style="background-color: white !important; ">{{about}}</textarea>
+                            </div>
+                            <div class="mb-3" style="background-color: beige  !important;">
+                                <label class="form-label fw-semibold" style="background-color: beige  !important;">Profile Picture:</label>
+                                <input type="file" name="profile_image" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="mb-3" style="background-color: beige  !important;">Your Listings</h4>
+        <div class="row g-4" style="background-color: beige !important;">
+            {% if my_listings %}
+                {% for listing in my_listings %}
+                    <div class="col-12 col-md-6 col-lg-4" style="background-color: beige  !important; min-width: 350px; max-width: 500px; flex: 1 1 400px;">
+                        <div class="announce card h-100 p-4 border-success border-2" style="background-color: white !important; min-height: 350px;">
+                            <a href="{{url_for('service.delete_product',del_id=listing['gen_id'],id=id,page=page,bool=bool,inc=inc)}}" class="delete-listing-btn"><img class='x' src="{{url_for('static',filename='images/x.png')}}" style="width: 10%;height: 10%;border-radius: 4rem;background-color: white;"></a>
+                            <img src="{{url_for('service.get_image_prod',id=listing['gen_id'])}}" class="PProduct card-img-top mb-3 rounded-3 mt-3" style="object-fit:cover; height: 200px; width: 100%;">
+                            <div class="card-body p-0" style="background-color: white !important;">
+                                <h6 class="card-title mb-2" style="background-color: white !important; font-size: 1.2rem;">{{ listing['product_name'] }}</h6>
+                                <div class="text-muted small" style="background-color: white  !important;">username: {{ listing['username'] }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             {% else %}
-                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page) }}" style="background-color: white;margin-right: 3%;"><button class="pageBtn">Previous page</button></a>
-                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page+1) }}" style="background-color: white;"><button class="pageBtn">Next page</button></a>
+                <div class="alert alert-warning text-center mb-0" style="background-color: beige  !important;">No listing to display!</div>
+            {% endif %}
+        </div>
+        <div class="d-flex justify-content-center mt-4" style="background-color: beige  !important;">
+            {% if  page >0 %}
+                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page-1) }}" class="btn btn-outline-dark mx-2">Previous page</a>
+                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page+1) }}" class="btn btn-dark mx-2">Next page</a>
+            {% else %}
+                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page) }}" class="btn btn-outline-dark mx-2">Previous page</a>
+                <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page+1) }}" class="btn btn-dark mx-2">Next page</a>
             {% endif %}
         </div>
     </div>
 
-
     <script>
-
         function editInfo(){
             document.getElementById('username').readOnly=false
             document.getElementById('email').readOnly=false
@@ -95,6 +114,7 @@
             document.getElementById('about').readOnly=true
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -3,6 +3,44 @@
 
 <head>
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <style>
+        @media screen and (max-width: 1000px) {
+            .Picture {
+                top:1%;
+                width: 10%;
+                height: 10%;
+            }
+            .viewProfile,
+            .viewProfile1,.addListing {
+                width: 10%;
+                height: 5%;
+                top:2%;
+            }
+            .out{
+               width:10% 
+            }
+        }
+        @media screen and (max-width: 650px) {
+            .listings{
+                position: absolute;
+                top: 20rem;
+            }
+            .viewProfile,
+            .viewProfile1,.addListing {
+                width: 20%;
+                height: 5%;
+                top:2%;
+            }
+            .Picture{
+                top:1%;
+                width: 5% !important;
+                height: 5% !important;
+            }
+            .out{
+                height:4% !important; 
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -16,8 +54,8 @@
         {% else %}
             <img src="{{url_for('service.get_image',id=id)}}" class="Picture">
         {% endif %}
-        <a href="/profile/{{id}}/true/{{id}}/0"><button class="viewProfile">View My Profile</button></a>
-        <a href="/messages/{{id}}"><button class="viewProfile1">View messages</button></a>
+        <a href="/profile/{{id}}/true/{{id}}/0"><button class="viewProfile">Profile</button></a>
+        <a href="/messages/{{id}}"><button class="viewProfile1">Messages</button></a>
         <button class="addListing" onclick="document.getElementById('box').style.display='grid'">Add a listing</button>
     </div>
     <div class="listings"> 
@@ -33,15 +71,16 @@
         {% else %}
             <div class="no_display">No listings to display</div>
         {% endif %}
-        <div class="paginate" style="top:60rem;">
-            {% if  page >0 %}
-                <a href="{{ url_for('service.main',id=id,page=page-1) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Previous page</button></a>
-                <a href="{{ url_for('service.main',id=id,page=page+1) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Next page</button></a>
-            {% else %}
-                <a href="{{ url_for('service.main',id=id,page=page) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Previous page</button></a>
-                <a href="{{ url_for('service.main',id=id,page=page+1) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Next page</button></a>
-            {% endif %}
-        </div>
+        
+    </div>
+    <div class="paginate" style="top:60rem;">
+        {% if  page >0 %}
+            <a href="{{ url_for('service.main',id=id,page=page-1) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Previous page</button></a>
+            <a href="{{ url_for('service.main',id=id,page=page+1) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Next page</button></a>
+        {% else %}
+            <a href="{{ url_for('service.main',id=id,page=page) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Previous page</button></a>
+            <a href="{{ url_for('service.main',id=id,page=page+1) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Next page</button></a>
+        {% endif %}
     </div>
     {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -65,7 +104,7 @@
         </form>
 
     </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

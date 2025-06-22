@@ -3,59 +3,106 @@
 
 <head>
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}"> 
-</head>
-
-<body>
-    
-    <a href="/signin"><button type="submit" class="buttons1">Sign in</button></a>
-    <a href="/signup"><button type="submit" class="buttons2">Sign up</button></a>
-    
-
-    <div class="welcome">
-        <img src="{{url_for('static', filename='images/logo.png')}}" class="imgLog" alt="Logo Image">
-        <div class="description">
-            <div class="catch">Elevate your style with ReStyle!</div>
-            <div class="lower">ReStyle is a market place which allows users<br> to connect, buy and sell second hand apparel. </div>
-        </div>
-    </div>
-
-    <div class="wrapper">
-        <div class="miniMarket">
-            <img src="{{url_for('static',filename='images/marketplace.png')}}" class="market">
-            <div class="marketD">
-                Discover diverse marketplace!
-            </div>
-        </div>
-
-        <div class="miniCustomer">
-            <img src="{{url_for('static',filename='images/customer.png')}}" class="customer">
-            <div class="customerD">
-                Connect with others!
-            </div>
-        </div>
-
-        <div class="miniDolar">
-            <img src="{{url_for('static',filename='images/deals.png')}}" class="dolar">
-            <div class="dolarD">
-                Make transactions on your terms!
-            </div>
-        </div>
-
-        <div class="miniEco">
-            <img src="{{url_for('static',filename='images/eco-energy.png')}}" class="eco">
-            <div class="ecoD">
-                Wear second hand apparel!
-            </div>
-    </div>
-
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <style>
-        @media(max-width:724px){
-            .welcome{
-                margin-top: 15% !important;
-            }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e3e9f7 100%);
+            min-height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+        }
+        .container {
+            margin: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            max-width: 100vw !important;
+        }
+        .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        }
+        footer.bg-white {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
         }
     </style>
+</head>
+
+<body class="bg-light min-vh-100 d-flex flex-column">
+    <div class="container py-5 flex-grow-1">
+        <div class="d-flex justify-content-end gap-3 mb-4" style="margin-right: 2%;">
+            <a href="/signin" class="btn btn-outline-primary px-4 py-2 fw-semibold shadow-sm">Sign in</a>
+            <a href="/signup" class="btn btn-primary px-4 py-2 fw-semibold shadow">Sign up</a>
+        </div>
+
+        <div class="row align-items-center mb-5 g-4">
+            <div class="col-md-4 text-center">
+                <img src="{{url_for('static', filename='images/logo.png')}}" class="img-fluid rounded-circle shadow-lg border border-3 border-primary-subtle" alt="Logo Image" style="max-width: 180px; background: #fff; padding: 1rem;">
+            </div>
+            <div class="col-md-8">
+                <div class="display-4 fw-bold mb-3 text-primary-emphasis">Elevate your style with <span class="text-primary">ReStyle!</span></div>
+                <div class="lead text-primary fs-4">ReStyle is a <span class="fw-semibold text-primary">marketplace</span> which allows users<br>to connect, buy and sell second hand apparel.</div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 text-center shadow border-0 bg-white">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <img src="{{url_for('static',filename='images/marketplace.png')}}" class="mb-3" style="height:90px; object-fit:contain;" alt="Marketplace">
+                        <h5 class="card-title fw-bold text-primary">Discover diverse marketplace!</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 text-center shadow border-0 bg-white">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <img src="{{url_for('static',filename='images/customer.png')}}" class="mb-3" style="height:90px; object-fit:contain;" alt="Customer">
+                        <h5 class="card-title fw-bold text-primary">Connect with others!</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 text-center shadow border-0 bg-white">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <img src="{{url_for('static',filename='images/deals.png')}}" class="mb-3" style="height:90px; object-fit:contain;" alt="Deals">
+                        <h5 class="card-title fw-bold text-primary">Make transactions on your terms!</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 text-center shadow border-0 bg-white">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <img src="{{url_for('static',filename='images/eco-energy.png')}}" class="mb-3" style="height:90px; object-fit:contain;" alt="Eco Friendly">
+                        <h5 class="card-title fw-bold text-primary">Wear second hand apparel!</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white">
+        <div class="container text-center text-secondary small">
+            &copy; {{ 2025 }} ReStyle. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 </body>
 
 </html>
