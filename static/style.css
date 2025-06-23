@@ -20,6 +20,31 @@
     max-width: 60%;
 }
 
+.paginate{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pageBtn{
+    border: 0.1rem solid black;
+    border-radius: 10%;
+    background-color: black;
+    color: white;
+    padding: 3%;
+    width:10vw;
+    height: auto;
+    transition: 0.6s ease-in;
+}
+
+.pageBtn:hover{
+    transform: scale(1.05);
+    background-color: white;
+    border: 0.1rem solid white;
+    color: black;
+}
+
+
 .catch{
     font-size: 250%;
     font-weight: bold;
@@ -393,14 +418,6 @@
     border-radius: 10%;
 }
 
-.start-convo{
-    display:none;
-    width: 30vw;
-    position: absolute;
-    left:40%;
-    margin-top: 2%;
-    
-}
 
 .avgButton{
     background-color: #0000ff;
@@ -420,11 +437,8 @@
     border: 0.1rem solid black;
     background-color: white;
     color: black;
-    position: absolute;
-    top:35%;
-    left:40%;
-    width:50% ;
-    height: 40%;
+    width:70%;
+    height: 60%;
 }
 
 .chat_box2{
@@ -460,9 +474,6 @@
     background-color: white;
     color: black;
     display:inline;
-    width:50% ;
-    height: 50%;
-    margin: 5%;
 }
 
 .listings{
@@ -495,10 +506,10 @@
     left:32%;
     background-color: black;
     color: white;
-    display: grid;
+    display: flex;
 }
 
-.upload_listing{
+/* .upload_listing{
     background-color: white;
     color:black;
     height: min-content;
@@ -541,55 +552,61 @@
     background-color: greenyellow;
     border: greenyellow;
     color: whitesmoke;
+} */
+/* 
+.ListingBox form {
+  background: #f5f6fa;
+  color: #222;
+  border-radius: 1.25rem;
+  padding: 1.5rem 1.25rem 1.25rem 1.25rem;
+  box-shadow: none;
 }
 
-.announce{
-    background-color: white;
-    border: 1rem solid green;
-    border-radius: 1rem;
-    margin: 3%;
-    padding: 2%;
-    max-width: 20vw;
-    text-wrap: pretty;
-    max-height: 30vh;
-    height: max-content;
-    width: max-content;
+.ListingBox .form-label {
+  font-weight: 500;
+  color: #333;
 }
 
-.PProduct{
-    width: 10vw;
-    height: 8vw;
+.ListingBox .form-control {
+  border-radius: 0.6rem;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #222;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  box-shadow: none;
 }
 
-.paginate{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.ListingBox .form-control:focus {
+  border-color: #b2dfdb;
+  box-shadow: 0 0 0 0.1rem rgba(76,175,80,0.08);
 }
 
-.pageBtn{
-    border: 0.1rem solid black;
-    border-radius: 10%;
-    background-color: black;
-    color: white;
-    padding: 3%;
-    width:10vw;
-    height: auto;
-    transition: 0.6s ease-in;
+.ListingBox .btn-success.upl {
+  border-radius: 0.6rem;
+  font-weight: 500;
+  font-size: 1.05rem;
+  background: linear-gradient(90deg, #b2dfdb 60%, #e0f7fa 100%);
+  color: #198754;
+  border: none;
+  box-shadow: 0 1px 4px rgba(76,175,80,0.06);
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
 }
 
-.pageBtn:hover{
-    transform: scale(1.05);
-    background-color: white;
-    border: 0.1rem solid white;
-    color: black;
+.ListingBox .btn-success.upl:hover {
+  background: linear-gradient(90deg, #e0f7fa 0%, #b2dfdb 100%);
+  color: #145a32;
+  box-shadow: 0 2px 8px rgba(76,175,80,0.10);
 }
 
-.no_display{
-    background-color: white;
-    justify-content: center;
-    margin: auto;
-    padding: 3%;
+.ListingBox .btn-close {
+  filter: none;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.ListingBox .btn-close:hover {
+  opacity: 0.8;
 }
 
 .delete-listing-btn {
@@ -620,6 +637,19 @@
   object-fit: contain;
   border-radius: 50%;
   background: transparent;
+} */
+
+.flashed-toast {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  max-width: 350px;
+  width: 90vw;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  pointer-events: auto;
+  background: none;
 }
 
 

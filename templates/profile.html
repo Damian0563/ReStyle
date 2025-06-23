@@ -2,6 +2,10 @@
 <html>
 
 <head>
+    <title>ReStyle</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static',filename='images/logo.webp')}}" type="image/x-icon">
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <style>
@@ -22,7 +26,7 @@
                     <div class="d-flex justify-content-center my-3">
                         <div class="popup alert alert-warning alert-dismissible fade show position-relative" id="pop" role="alert" style="max-width: 350px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
                             <span style="background-color: red;color:black;display:block;width:100%;text-align:center;">{{ message }}</span>
-                            <img src="{{url_for('static',filename='images/x.png')}}" style="position:absolute;top:0.5rem;right:0.5rem;background-color: red;width:1.5rem;height:1.5rem;cursor:pointer;" onclick="this.closest('.popup').style.display='none'">
+                            <img src="{{url_for('static',filename='images/x.webp')}}" style="position:absolute;top:0.5rem;right:0.5rem;background-color: red;width:1.5rem;height:1.5rem;cursor:pointer;" onclick="this.closest('.popup').style.display='none'">
                         </div>
                     </div>
                 {% endfor %}
@@ -30,16 +34,16 @@
         {% endwith %}
 
         <div class="d-flex justify-content-between align-items-center mb-4" style="background-color: beige  !important;">
-            <a href="/home/{{id}}/0" {% if bool!='true' %} style="display:none;"{% endif %}><img src="{{url_for('static',filename='images/home.png')}}" id="home" style="width: 2rem; height: 2rem;background-color: beige !important;"></a>
-            <a href="/home/{{inc}}/0" {% if bool=='true' %} style="display:none;"{% endif %}><img src="{{url_for('static',filename='images/home.png')}}" id="home" style="width: 2rem; height: 2rem;background-color: beige !important;"></a>
+            <a href="/home/{{id}}/0" {% if bool!='true' %} style="display:none;"{% endif %}><img src="{{url_for('static',filename='images/home.webp')}}" id="home" style="width: 2rem; height: 2rem;background-color: beige !important;"></a>
+            <a href="/home/{{inc}}/0" {% if bool=='true' %} style="display:none;"{% endif %}><img src="{{url_for('static',filename='images/home.webp')}}" id="home" style="width: 2rem; height: 2rem;background-color: beige !important;"></a>
         </div>
 
-        <div class="row g-4 align-items-center mb-4" style="background-color: beige  !important;">
+        <div class="row g-4 gx-5 align-items-center mb-4" style="background-color: beige  !important;">
             <div class="col-md-4 text-center" style="background-color: beige  !important;">
                 {% if picture=="default" %}
-                    <img src="{{url_for('static',filename='images/default.jpg')}}" class="Pic img-fluid rounded-circle border border-3 border-primary-subtle shadow" style="max-width: 220px;">
+                    <img src="{{url_for('static',filename='images/default.webp')}}" class="Pic img-fluid rounded-circle border border-3 border-primary-subtle shadow" style="max-width: 420px;">
                 {% else %}
-                    <img src="{{url_for('service.get_image',id=id)}}" class="Pic img-fluid rounded-circle border border-3 border-primary-subtle shadow" style="max-width: 220px;">
+                    <img src="{{url_for('service.get_image',id=id)}}" class="Pic img-fluid rounded-circle border border-3 border-primary-subtle shadow" style="max-width: 420px;">
                 {% endif %}
             </div>
             <div class="col-md-8 rounded" style="background-color: beige  !important;border: 0.1rem solid black;">

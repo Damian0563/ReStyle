@@ -2,6 +2,10 @@
 <html>
 
 <head>
+    <title>ReStyle</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static',filename='images/logo.webp')}}" type="image/x-icon">
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
     <style>
         @media screen and (max-width: 1000px) {
@@ -40,6 +44,18 @@
                 height:4% !important; 
             }
         }
+        #upload{
+            transition: 0.8s ease-in-out !important;
+            color: white !important;
+            background-color: blue !important;
+            border-radius: 5% !important;
+            border: 1px solid black !important;
+        }
+        #upload:hover {
+            background-color: white !important;
+            color: blue !important;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 
@@ -50,7 +66,7 @@
 
     <div class="upper">
         {% if picture=="default" %}
-            <img src="{{url_for('static',filename='images/default.jpg')}}" class="Picture">
+            <img src="{{url_for('static',filename='images/default.webp')}}" class="Picture">
         {% else %}
             <img src="{{url_for('service.get_image',id=id)}}" class="Picture">
         {% endif %}
@@ -58,18 +74,28 @@
         <a href="/messages/{{id}}"><button class="viewProfile1">Messages</button></a>
         <button class="addListing" onclick="document.getElementById('box').style.display='grid'">Add a listing</button>
     </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="flashed-toast popup alert alert-warning alert-dismissible fade show justify-content-center position-fixed top-0 start-50 translate-middle-x mt-4" id="pop" role="alert" style="max-width: 350px; z-index: 2000; width: 90vw; left: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);background-color: red;">
+                <span style="background-color: red;color:black;display:block;width:100%;text-align:center;">{{ message }}</span>
+                <img src="{{url_for('static',filename='images/x.webp')}}" style="position:absolute;top:0.1rem;right:0.5rem;background-color: red;width:1.5rem;height:1.5rem;cursor:pointer;" onclick="this.closest('.popup').style.display='none'">
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
     <div class="listings"> 
         <!-- style="height:100vh;display: flex;flex-wrap: wrap;" -->
         {% if listings %}
             {% for listing in listings %}
-                <div class="announce" style="display: flexbox;">
+                <div class="announce" style="display: flex;">
                     <img src="{{url_for('service.get_image_prod',id=listing['gen_id'])}}" class="PProduct"><br>
                     title: {{ listing['product_name'] }}<br>
                     <a href="/profile/{{listing['user']}}/false/{{id}}/0">username:{{ listing['username'] }}</a><br>
                 </div>
             {% endfor %}
         {% else %}
-            <div class="no_display">No listings to display</div>
+            <div class="no_display" style="background-color: white !important;margin-left: 1rem ;margin-top:1rem">No listings to display</div>
         {% endif %}
         
     </div>
@@ -82,27 +108,27 @@
             <a href="{{ url_for('service.main',id=id,page=page+1) }}" style="background-color: white;margin:3%;"><button class="pageBtn">Next page</button></a>
         {% endif %}
     </div>
-    {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="popup"  style="position: absolute; top:15rem;height:12vh;width:20vw;left:5%;justify-content: center;" id="pop" >
-                        <br><br>{{ message }}
-                        <img class='x' src="{{url_for('static',filename='images/x.png')}}" style="width: 5%;border-radius: 4rem;position: absolute;top:1rem;right: 1rem;background-color: red;" onclick="document.getElementById('pop').style.display='none'">
-                    </div>  
-                {% endfor %}
-            {% endif %}
-    {% endwith %}
-    <div class="ListingBox" id="box" style="display: none;padding: 1%">
-
-        <form method="POST" autocomplete="off" enctype="multipart/form-data" style="background-color: black;height: 50%;margin: 2%">
-            <img src="{{url_for('static',filename='images/x.png')}}" style="position: absolute;right: 3%;width: 3%;height:3%" onclick="document.getElementById('box').style.display='none'"><br>
-            <text style="background-color: black;">Add a picture of the product</text> <input name="photo" type="file" class="upload_listing" style="margin-left: 3%;background-color: whitesmoke;" type="file"><br><br<br><br>
-            <text style="background-color: black;">Add the title of the product</text> <br><br><input name="title" class="add_title" style="background-color: whitesmoke;width: 30vw;height: 5vh;" type="text"><br><br><br>
-            <text style="background-color: black;">Add a price </text><input class="add_price" name="price" type="text" style="width: 20%;background-color: whitesmoke;"><br><br><br>
-            <text style="background-color: black;">Add description of the product</text> <br><br><input name="description" class="add_description" style="background-color: whitesmoke;width: 30vw;height:10vh ;" type="text"><br><br><br>
-            <button class="upl" style="width: 30%;height: 15%;" onclick="document.getElementById('box').style.display='none'">Upload listing</button>
+    <div class="ListingBox" id="box" style="display: none;padding: 1%;border-radius: 2%;">
+        <form method="POST" autocomplete="off" enctype="multipart/form-data" style="background-color: black;display: block;height: 50%;margin: 2%">
+            <img src="{{url_for('static',filename='images/x.webp')}}" style="position: absolute;right: 3%;width: 3%;height:3%;background-color: red;border-radius: 50%;" onclick="document.getElementById('box').style.display='none'"><br>
+            <label style="background-color: black;color:white">Add a picture of the product</label>
+            <input name="photo" type="file" class="upload_listing" style="margin-left: 3%;background-color: whitesmoke;" type="file">
+            <div style="margin-bottom: 1%;padding:3%;display: grid;background-color: black;margin-top: 1%;">
+                <label style="background-color: black;color:white;margin-bottom: 1%;">Add the title of the product</label>
+                <textarea name="title" class="add_title" style="background-color: whitesmoke;width: 30vw;height: 8vh;border: 0.1rem solid lightblue;border-radius: 4%;resize: none;"></textarea>
+            </div>
+            <div style="padding:3%;background-color: black;">
+                <label style="background-color: black;color:white;margin-bottom: 1%;">Add a price </label>
+                <input class="add_price" name="price" style="width: 20%;background-color: whitesmoke;border: 0.1rem solid lightblue;border-radius: 4%;">
+            </div>
+            <div style="margin-bottom: 3%;padding:3%;display: grid;background-color: black;margin-top: 0%;">
+                <label style="background-color: black;color:white;margin-bottom: 1%;">Add description of the product</label>
+                <textarea name="description" class="add_description" style="background-color: whitesmoke;width: 30vw;height:15vh;border: 0.1rem solid lightblue;border-radius: 4%;resize: none;"></textarea>
+            </div>
+            <div style="display: flex; background-color: black; justify-content: center; align-items: center;">
+                <button id="upload"  style="width: 30%; height: 15%;padding: 3%;color:blue">Upload listing</button>
+            </div>
         </form>
-
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>

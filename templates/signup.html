@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>ReStyle</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{{url_for('static',filename='images/logo.webp')}}" type="image/x-icon">
         <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
     </head>
 
     <body>
         <div style="width: 100%;">
-            <a href="/"><img src="{{url_for('static',filename='images/home.png')}}" style="width: 3%;height: 3%;margin: 3%;"></a>
+            <a href="/"><img src="{{url_for('static',filename='images/home.webp')}}" style="width: 3%;height: 3%;margin: 3%;"></a>
         </div>
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -16,14 +20,14 @@
                         <div class="d-flex justify-content-center my-3" style="width:100%">
                             <div class="popup alert alert-warning alert-dismissible fade show justify-content-center position-relative" id="pop" role="alert" style="max-width: 350px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
                                 <span style="background-color: red;color:black;display:block;width:100%;text-align:center;">{{ message }}</span>
-                                <img src="{{url_for('static',filename='images/x.png')}}" style="top:0.1rem;right:0.5rem;background-color: red;width:1vw;height:auto;cursor:pointer;" onclick="this.closest('.popup').style.display='none'">
+                                <img src="{{url_for('static',filename='images/x.webp')}}" style="top:0.1rem;right:0.5rem;background-color: red;width:1vw;height:auto;cursor:pointer;" onclick="this.closest('.popup').style.display='none'">
                             </div>
                         </div>
                     {% else %}
                         <div class="d-flex justify-content-center my-3" style="width:100%">
                             <div class="popup alert alert-warning alert-dismissible fade show justify-content-center position-relative" id="pop" role="alert" style="max-width: 350px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-                                <span style="background-color: red;color:black;display:block;width:100%;text-align:center;">{{ message }}</span>
-                                <img src="{{url_for('static',filename='images/x.png')}}" style="top:0.1rem;right:0.5rem;background-color: red;width:1vw;height:auto;cursor:pointer;" onclick="this.closest('.popup').style.display='none'">
+                                <span style="background-color: green;color:black;display:block;width:100%;text-align:center;">{{ message }}</span>
+                                <img src="{{url_for('static',filename='images/x.webp')}}" style="top:0.1rem;right:0.5rem;background-color: green;width:1vw;height:auto;cursor:pointer;" onclick="this.closest('.popup').style.display='none'">
                             </div>
                         </div>
                     {% endif %}
@@ -31,7 +35,7 @@
             {% endif %}
         {% endwith %}
         <div class="form1 rounded" style="max-width: 400px; margin: 3% auto;">
-            <img src="{{url_for('static',filename='images/logo.png')}}" class="Log" alt="Logo Image">
+            <img src="{{url_for('static',filename='images/logo.webp')}}" class="Log" alt="Logo Image">
             <form method="POST" autocomplete="off" class="rounded" style="max-width: 350px; margin: 0 auto;">
                 <input placeholder="Enter your email" name="email" style="margin: 2%;padding: 3%;width: 90%;background-color: white;"><br>
                 <input placeholder="Enter your username" name="username" style="margin: 2%;padding: 3%;width: 90%;background-color: white;"><br>

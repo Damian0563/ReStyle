@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <title>ReStyle</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static',filename='images/logo.webp')}}" type="image/x-icon">
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
 </head>
 
 <body>
-    <a href="/home/{{id}}/0"><img src="{{url_for('static',filename='images/home.png')}}" style="width: 5%;height: 5%;margin: 3%;"></a>
+    <a href="/home/{{id}}/0"><img src="{{url_for('static',filename='images/home.webp')}}" style="width: 5%;height: 5%;margin: 3%;"></a>
     
     {% if picture=="default" %}
-        <img src="{{url_for('static',filename='images/default.jpg')}}" class="Picture" style="left:20%">
+        <img src="{{url_for('static',filename='images/default.webp')}}" class="Picture" style="left:20%">
         <div style="position: absolute;top:6%;left:40%;font-size: 3rem;">{{username}}'s messages</div>
     {% else %}
         <img src="{{url_for('service.get_image',id=id)}}" class="Picture" style="left:20%">
@@ -21,67 +24,100 @@
                 {% for message in messages %}
                     <div class="popup" id="pop" >
                         {{ message }}
-                        <img class='x' src="{{url_for('static',filename='images/x.png')}}" style="width: 2%;border-radius: 4rem;position: absolute;top:10rem;right: 31rem;background-color: red;" onclick="document.getElementById('pop').style.display='none'">
+                        <img class='x' src="{{url_for('static',filename='images/x.webp')}}" style="width: 2%;border-radius: 4rem;position: absolute;top:10rem;right: 31rem;background-color: red;" onclick="document.getElementById('pop').style.display='none'">
                     </div>  
                 {% endfor %}
             {% endif %}
-        {% endwith %}
-
-    <div class="chat-container">
-        <div>
-            <img src="{{url_for('static',filename='images/compose.png')}}" class="compose" style="height: 10%;width: 10%;" onclick="StartConvo()">
+    {% endwith %}
+    <div style="display: flex; align-items: center; gap: 0.3rem; margin: 2% 0; position: relative;">
+        <img 
+            src="{{url_for('static',filename='images/compose.webp')}}" 
+            class="compose" 
+            style="height: 44px; width: 44px; cursor: pointer; transition: transform 0.15s;" 
+            onclick="StartConvo()" 
+            onmouseover="this.style.transform='scale(1.08)'" 
+            onmouseout="this.style.transform='scale(1)'"
+            alt="Compose"
+        >
+        <div 
+            class="start-convo" 
+            id="convo" 
+            style="display: none; width:20vw; background: #f9f9f9; height:30px; border: 1px solid #e0e0e0; border-radius: 0.7rem; padding: 0.5rem 0.8rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); z-index: 1001; position: absolute; right: 80px;"
+        >
+            <form method="post" autocomplete="off" style="display: flex; align-items: center; gap: 0.3rem;background-color: white;">
+                <input 
+                    placeholder="User to connect" 
+                    name="link" 
+                    style="flex: 1 1 0; background: #fff; border: 1px solid #ccc; border-radius: 0.2rem; padding: 0.3rem 0.3rem; font-size: 0.92rem; outline: none; transition: border 0.2s; min-width: 0;"
+                    onfocus="this.style.borderColor='#888'"
+                    onblur="this.style.borderColor='#ccc'"
+                >
+                <button 
+                    type="submit"
+                    class="avgButton" 
+                    onclick="Collapse()" 
+                    style="background: #4a90e2; color: #fff; border: none; border-radius: 0.5rem; padding: 0.3rem 0.7rem; font-size: 0.92rem; cursor: pointer; transition: background 0.18s;"
+                    onmouseover="this.style.background='#357ab8'"
+                    onmouseout="this.style.background='#4a90e2'"
+                >
+                    Start
+                </button>
+            </form>
         </div>
-
-        <div class="start-convo" id="convo">
-            <form method="post" autocomplete="off"><input placeholder="Enter a user you would like to connect with" name="link" style="background-color: white;width: 24vw;padding: 3%;margin-right: 1%;"><button class="avgButton" onclick="Collapse()" style="width: 10vw;position: absolute;top:0%;left:90%;height: 100%;">Start a conversation</button></form>
-        </div>
-
-        <div class="your-chats">
+    </div>
+    <div style="display: flex; flex-direction: row; min-height: 80vh; width: 100%; gap: 1vw;">
+        <div class="your-chats" style="flex: 0 0 260px; max-width: 320px; min-width: 180px; background: #fff; border-radius: 1.2rem 0 0 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; padding: 2% 1.5%; display: flex; flex-direction: column; align-items: stretch;">
             {% if all_chats %}
                 {% for chat in all_chats %}
                         {% if chat[1]==connect1 %}
-                            <a href="/messages/{{id}}/{{chat[1]}}" style="text-decoration: none;color: black;opacity: 0.6;">
-                                <div class="chat">
+                            <a href="/messages/{{id}}/{{chat[1]}}" style="text-decoration: none;color: black;opacity: 0.6;background-color: white;">
+                                <div class="chat" style="background-color: white !important;">
                                     <img src="{{url_for('service.get_image',id=chat[0])}}" style="width: 5%;height: 5%;">
-                                    <text>Chat with {{chat[1]}}</text>  
+                                    <strong style="background-color: white !important;">{{chat[1]}}</strong>
                                 </div>
                             </a>
                         {%else%}
-                            <a href="/messages/{{id}}/{{chat[1]}}" style="text-decoration: none;color: black;">
-                                <div class="chat">
-                                    <img src="{{url_for('service.get_image',id=chat[0])}}" style="width: 5%;height: 5%;">
-                                    <text>Chat with {{chat[1]}}</text>  
+                            <a href="/messages/{{id}}/{{chat[1]}}/{{chat[2]}}" style="text-decoration: none; color: black;background-color: white;">
+                                <div class="chat" style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1.2rem; padding: 0.7rem 1rem; border-radius: 0.7rem; background: #f7f7f7; border: 1px solid #e0e0e0; transition: background 0.2s;">
+                                    <img src="{{url_for('service.get_image',id=chat[0])}}" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">
+                                    <span style="font-size: 1rem;background-color: white;"><strong style="background-color: white;">{{chat[1]}}</strong></span>
                                 </div>
                             </a>
                         {%endif%}
                 {% endfor %}
             {% else %}
-                <text style="background-color: white; text-align: center; margin: 20%;">No chat history</text>
+                <div style="text-align: center; color: #888; margin-top: 2rem;">No chat history</div>
             {% endif %}
         </div>
 
-        <div class="chat_box" id="chbox" style="overflow-y: auto;">
+        <div class="chat_box" style="flex: 1 1 0; background: #fff; border-radius: 0 1.2rem 1.2rem 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; padding: 2% 2.5%; min-width: 0; min-height: 400px;">
             {% if current!=[''] %}
                 {% for message in current %}
                     {% if message %}
                         {% if message[0]==id %}
-                            <div class="me" style="height: 2vh;">{{username}} says: {{message[1]}}</div>
+                            <div class="me" style="height: 2vh;">{{username}}: {{message[1]}}</div>
                         {% else %}
-                            <div class="you" style="height: 2vh;">{{connect1}} says: {{message[1]}}</div>
+                            <div class="you" style="height: 2vh;">{{connect1}}: {{message[1]}}</div>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
             {% else %}
                 <div class="chat_box2">No chat history</div>
             {% endif %}
+            
         </div>
-        <div class="writeMessage">
-            <form method="post" autocomplete="off"><textarea name="convo" id="mess" style="resize: none;background-color: white;width: 35vw;padding: 0.5%;margin-right: 1%;position: absolute;top:80%;height: 8vh;text-wrap:wrap;right: 20%;"></textarea><button class="avgButton" id="sendBtn" style="position: absolute;top:85%;right: 12%;width: 6vw;height: 4vh;">Send</button></form>
+        
+    </div>
+    <div style="position: absolute;right: 8rem;top:90vh;margin: 0;">
+        <div class="writeMessage" style="background: #f8f9fa; border-top: 1px solid #e0e0e0; padding: 1.2rem 1rem; display: flex; align-items: center; justify-content: center; border-radius: 0 0 1.2rem 1.2rem; box-shadow: 0 -2px 8px rgba(0,0,0,0.04);">
+            <form method="post" autocomplete="off" style="display: flex; align-items: center; gap: 0.7rem; width: 100%; max-width: 700px;background-color: white;">
+                <textarea name="convo" id="mess" style="resize: none; background: #fff; width: 60vw; min-width: 180px; max-width: 500px; padding: 0.7rem 1rem; margin-right: 0.5rem; height: 7vh; border: 1px solid #b0b0b0; border-radius: 0.7rem; font-size: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.04); outline: none; transition: border 0.2s;" onfocus="this.style.borderColor='#4a90e2'" onblur="this.style.borderColor='#b0b0b0'" placeholder="Type your message..."></textarea>
+                <button class="avgButton" id="sendBtn" style="position: static; width: 7vw; min-width: 70px; max-width: 120px; height: 3.2rem; border-radius: 0.7rem; font-size: 1.05rem; font-weight: 600; background: #4a90e2; color: #fff; border: none; box-shadow: 0 2px 8px rgba(74,144,226,0.08); transition: background 0.18s;" onmouseover="this.style.background='#357ab8'" onmouseout="this.style.background='#4a90e2'">Send</button>
+            </form>
             <input type="hidden" value="{{room}}" id="room">
             <input type="hidden" value="{{id}}" id="user1">
             <input type="hidden" value="{{connect1}}" id="user2">
             <input type="hidden" value="{{username}}" id="usertemp">
-    
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
