@@ -6,11 +6,11 @@ Users have the ability to manipulate their listings as well as to edit their pro
 <strong>Please do not judge the site on UI too much- I have had used pure CSS for styling, which at the point of UI refactoring/optimisations turned out 
 to be more gruelsome than initially expected. Thank you for your understanding.</strong>
 
-<img src="images/landing.png" width="600">
-<img src="images/sign.png" width="600">
-<img src="images/profile.png" width="600">
-<img src="images/main.png" width="600">
-<img src="images/messages.png" width="600">
+<img src="static/images/landing.png" width="600">
+<img src="static/images/sign.png" width="600">
+<img src="static/images/profile.png" width="600">
+<img src="static/images/main.png" width="600">
+<img src="static/images/messages.png" width="600">
 
 ## Technologies in use
   -Mongodb
