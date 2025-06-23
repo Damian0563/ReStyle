@@ -307,6 +307,10 @@
     background-color: white;
 }
 
+.PProduct{
+    max-width: 200px;
+    max-height: 200px;
+}
 
 
 .Picture{
@@ -481,6 +485,7 @@
     margin-top: 14%;
     margin-left: 10%;
     margin-right: 10%;
+    padding: 2%;
     height: 100vh;
     background-color: white;
     border: 1rem solid black;

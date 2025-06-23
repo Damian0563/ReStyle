@@ -13,60 +13,54 @@ load_dotenv()
 service=Blueprint('service',__name__)
 @service.route('/home/<id>/<page>',methods=['GET','POST'])
 def main(id,page):
-    username=get_user_by_id(id)[0]
-    email=get_user_by_id(id)[1]
-    picture=get_user_by_id(id)[2]
-    client = MongoClient('localhost', 27017)
-    db = client.restyle
-    chats=db.chats
-    products=db.products
-    all_chats=[]
-    listings=[]
-    i=0
-    j=0
-    first=chats.find({"user1":id})
-    second=chats.find({"user2":id})
-    for entry in first:
-        all_chats.append((entry['user2'],get_user_by_id(entry['user2'])[0],entry['messages']))
-    for entry in second:
-        all_chats.append((entry['user1'],get_user_by_id(entry['user1'])[0],entry['messages']))
-    try:
-        page=int(page)
-        if page<0:
+    if request.method=="GET":
+        username=get_user_by_id(id)[0]
+        email=get_user_by_id(id)[1]
+        picture=get_user_by_id(id)[2]
+        client = MongoClient('localhost', 27017)
+        db = client.restyle
+        chats=db.chats
+        products=db.products
+        all_chats=[]
+        listings=[]
+        i=0
+        j=0
+        first=chats.find({"user1":id})
+        second=chats.find({"user2":id})
+        for entry in first:
+            all_chats.append((entry['user2'],get_user_by_id(entry['user2'])[0],entry['messages']))
+        for entry in second:
+            all_chats.append((entry['user1'],get_user_by_id(entry['user1'])[0],entry['messages']))
+        try:
+            page=int(page)
+            if page<=0:
+                page=0
+                i=0
+                j=0
+                for entry in products.find():
+                    if str(entry['user'])!=str(id):
+                        if j>=8*page:
+                            listings.append(entry)
+                            i+=1
+                            if i>page+7:
+                                break
+                        j+=1
+                return render_template('service.html',id=id,page=0,all_chats=all_chats,listings=listings)
+            raise ValueError
+        except ValueError:
             page=0
             i=0
             j=0
             for entry in products.find():
+                print(entry)
                 if str(entry['user'])!=str(id):
-                    if j>8*page:
+                    if j>=8*page:
                         listings.append(entry)
                         i+=1
                         if i>page+7:
                             break
                     j+=1
             return render_template('service.html',id=id,page=0,all_chats=all_chats,listings=listings)
-    except ValueError:
-        page=0
-        i=0
-        j=0
-        for entry in products.find():
-            if str(entry['user'])!=str(id):
-                if j>8*page:
-                    listings.append(entry)
-                    i+=1
-                    if i>page+7:
-                        break
-                j+=1
-        return render_template('service.html',id=id,page=0,all_chats=all_chats,listings=listings)
-    for entry in products.find():
-        if str(entry['user'])!=str(id):
-            if j>8*page:
-                listings.append(entry)
-                i+=1
-                if i>page+7:
-                    break
-            j+=1
-    
     if request.method=="POST":
         product_name=request.form.get("title")
         price=request.form.get("price")
@@ -225,7 +219,7 @@ def get_image(id):
         return Response(user['img'], mimetype=user['mimetype'])
     else:
         image_path = r'C:\Users\damia\Desktop\ReStyle\static\images\default.webp'
-        return send_file(image_path,mimetype='image/webp')
+        return send_file(image_path,mimetype='image/jpeg')
 
 @service.route('/get_image_prod/<id>')
 def get_image_prod(id):
