@@ -442,7 +442,7 @@
     background-color: white;
     color: black;
     width:70%;
-    height: 60%;
+    height: 80% !important;
 }
 
 .chat_box2{

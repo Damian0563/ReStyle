@@ -99,6 +99,7 @@
                     <img src="{{url_for('service.get_image_prod',id=listing['gen_id'])}}" class="PProduct" style="width: 90px; height: 90px; object-fit: cover; border-radius: 0.7rem; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-right: 1rem; border: 1px solid #e0e0e0;">
                     <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 0.5rem; flex: 1;background-color: white;">
                         <span style="font-size: 1.15rem; font-weight: 600; color: #222;background-color: white;">{{ listing['product_name'] }}</span>
+                        <span style="font-size: 1rem; color: #555;background-color: white;font-weight:500;">{{ listing['price'] }}$</span>
                         <a href="/profile/{{listing['user']}}/false/{{id}}/0" style="font-size: 1rem;background-color: white; color: #4a90e2; text-decoration: none; font-weight: 500;">@{{ listing['username'] }}</a>
                     </div>
                 </div>
