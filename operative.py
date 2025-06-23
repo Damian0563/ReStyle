@@ -224,8 +224,8 @@ def get_image(id):
     if user and 'img' in user and 'mimetype' in user:
         return Response(user['img'], mimetype=user['mimetype'])
     else:
-        image_path = r'C:\Users\damia\Desktop\ReStyle\static\images\default.jpg'
-        return send_file(image_path,mimetype='image/jpeg')
+        image_path = r'C:\Users\damia\Desktop\ReStyle\static\images\default.webp'
+        return send_file(image_path,mimetype='image/webp')
 
 @service.route('/get_image_prod/<id>')
 def get_image_prod(id):
