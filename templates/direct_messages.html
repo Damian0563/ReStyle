@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>ReStyle</title>
@@ -183,4 +183,203 @@
     </script>
 </body>
 
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ReStyle - Messages</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{{url_for('static',filename='images/logo.webp')}}" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    /* Sidebar chat list */
+    .chat-list a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .chat-list .chat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.7rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .chat-list .chat-item:hover {
+      background: #e9f2ff;
+    }
+    .chat-list img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Chat messages */
+    .chat-box {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    .message.me {
+      align-self: flex-end;
+      background: #4a90e2;
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 1rem 1rem 0 1rem;
+      margin: 0.4rem 0;
+      max-width: 70%;
+    }
+    .message.you {
+      align-self: flex-start;
+      background: #e9ecef;
+      color: #000;
+      padding: 0.6rem 1rem;
+      border-radius: 1rem 1rem 1rem 0;
+      margin: 0.4rem 0;
+      max-width: 70%;
+    }
+
+    /* Input box */
+    .message-input {
+      border-top: 1px solid #dee2e6;
+      padding: 0.75rem;
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body class="d-flex flex-column">
+  <nav class="navbar navbar-light bg-white shadow-sm px-3">
+    <a href="/home/{{id}}/0" class="navbar-brand">
+      <img src="{{url_for('static',filename='images/home.webp')}}" alt="Home" style="height: 36px;">
+    </a>
+    <div class="d-flex align-items-center">
+      {% if picture=="default" %}
+        <img src="{{url_for('static',filename='images/default.webp')}}" class="rounded-circle border" style="width:48px; height:48px; object-fit:cover;">
+      {% else %}
+        <img src="{{url_for('service.get_image',id=id)}}" class="rounded-circle border" style="width:48px; height:48px; object-fit:cover;">
+      {% endif %}
+      <h5 class="ms-3 mb-0 fw-bold">{{username}}'s Messages</h5>
+    </div>
+  </nav>
+
+    <div class="container-fluid" style="display: flex; flex-direction: row; height: 90vh !important; width: 100%; gap: 1vw;">
+        <div class="row h-100 w-100">
+            <div class="col-md-3 col-12 border-end bg-white py-3 chat-list">
+                {% if all_chats %}
+                    {% for chat in all_chats %}
+                        <a href="/messages/{{id}}/{{chat[1]}}/{{chat[2]}}">
+                            <div class="chat-item {% if chat[1]==connect1 %}bg-light{% endif %}">
+                                <img src="{{url_for('service.get_image',id=chat[0])}}">
+                                <span class="fw-semibold">{{chat[1]}}</span>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                <p class="text-muted text-center mt-3">No chat history</p>
+                {% endif %}
+            </div>
+        <div class="col-md-9 col-12 d-flex flex-column" id="chbox" style="max-height: 800px !important;">
+            <div class="chat-box flex-grow-1" id="chat-messages-container">
+                {% if current!=[''] %}
+                    {% for message in current %}
+                        {% if message %}
+                            {% if message[0]==id %}
+                            <div class="message me">{{message[1]}}</div>
+                            {% else %}
+                            <div class="message you">{{message[1]}}</div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted text-center mt-3">No messages yet</p>
+                {% endif %}
+            </div>
+            <div class="message-input mt-2">
+                <div class="d-flex gap-2">
+                    <textarea name="convo" id="mess" class="form-control" rows="2" placeholder="Type your message..." style="resize:none;"></textarea>
+                    <button type="submit" class="btn btn-primary px-4" id="sendBtn">Send</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <input type="hidden" value="{{room}}" id="room">
+    <input type="hidden" value="{{id}}" id="user1">
+    <input type="hidden" value="{{connect1}}" id="user2">
+    <input type="hidden" value="{{username}}" id="usertemp">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function Load(){
+            let container=document.getElementById('chat-messages-container')
+            container.scrollTop=container.scrollHeight
+        }
+        function StartConvo(){
+            document.getElementById('convo').style.display="flex"
+        }
+        function Collapse(){
+            document.getElementById('convo').style.display='none'
+        }
+        function display(user,message){
+            const div=document.createElement('div')
+            div.textContent=`${message}`
+            if (user===document.getElementById('usertemp').value) div.classList.add('you') 
+            else div.classList.add('me') 
+            div.classList.add("message")
+            document.getElementById('chat-messages-container').append(div)
+            Load()
+        }   
+        const room=document.getElementById('room').value
+        const username=document.getElementById('user1').value
+        const connect=document.getElementById('user2').value
+        const user3=document.getElementById('usertemp').value
+        let socket=io()
+        socket.connect(`http://127.0.0.1:5000/messages/${username}/${connect}/${room}`)
+        socket.on("connect", function () {
+            //console.log("Connected to server!");
+            socket.emit('join-room',room)
+            //console.log("Joined room: ",room)
+        });
+
+        socket.on('error', function (error) {
+            //console.error("Socket error received:", error);
+        });
+
+        socket.on('send-message', (message) => {
+            display(user3, message['text']);
+        });
+
+        socket.on('receive-message',(message)=>{
+            display(connect,message['text'])
+        })
+        document.getElementById("sendBtn").addEventListener("click", function(event) {
+            event.preventDefault();
+            let message = document.getElementById("mess").value;
+            fetch(window.location.href, {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `convo=${encodeURIComponent(message)}`
+            }).then(response => response.text())
+            .then(data => {
+                //console.log(data)
+                socket.emit('send-message',{"text":message,"room":room});
+                //console.log(`Emitted: {text: ${message},room: ${room}}`)
+            })
+            .catch(error => console.error("Error:", error));
+            document.getElementById("mess").value = "";
+        });
+        window.onload=Load
+    </script>
+</body>
 </html>

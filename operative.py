@@ -33,8 +33,7 @@ def main(id,page):
             all_chats.append((entry['user1'],get_user_by_id(entry['user1'])[0],entry['messages']))
         try:
             page=int(page)
-            if page<=0:
-                page=0
+            if page>=0:
                 i=0
                 j=0
                 for entry in products.find():
@@ -45,14 +44,14 @@ def main(id,page):
                             if i>page+7:
                                 break
                         j+=1
-                return render_template('service.html',id=id,page=0,all_chats=all_chats,listings=listings)
+                return render_template('service.html',id=id,page=page,all_chats=all_chats,listings=listings)
             raise ValueError
         except ValueError:
             page=0
             i=0
             j=0
             for entry in products.find():
-                print(entry)
+                #print(entry)
                 if str(entry['user'])!=str(id):
                     if j>=8*page:
                         listings.append(entry)
@@ -62,9 +61,52 @@ def main(id,page):
                     j+=1
             return render_template('service.html',id=id,page=0,all_chats=all_chats,listings=listings)
     if request.method=="POST":
+        client = MongoClient('localhost', 27017)
+        db = client.restyle
+        products=db.products
+        chats=db.chats
         product_name=request.form.get("title")
         price=request.form.get("price")
         description=request.form.get("description")
+        username=get_user_by_id(id)[0]
+        picture=get_user_by_id(id)[2]
+        all_chats=[]
+        listings=[]
+        i=0
+        j=0
+        first=chats.find({"user1":id})
+        second=chats.find({"user2":id})
+        for entry in first:
+            all_chats.append((entry['user2'],get_user_by_id(entry['user2'])[0],entry['messages']))
+        for entry in second:
+            all_chats.append((entry['user1'],get_user_by_id(entry['user1'])[0],entry['messages']))
+        try:
+            page=int(page)
+            if page>=0:
+                i=0
+                j=0
+                for entry in products.find():
+                    if str(entry['user'])!=str(id):
+                        if j>=8*page:
+                            listings.append(entry)
+                            i+=1
+                            if i>page+7:
+                                break
+                        j+=1
+            raise ValueError
+        except ValueError:
+            page=0
+            i=0
+            j=0
+            for entry in products.find():
+                #print(entry)
+                if str(entry['user'])!=str(id):
+                    if j>=8*page:
+                        listings.append(entry)
+                        i+=1
+                        if i>page+7:
+                            break
+                    j+=1
         try:
             price = int(price)
         except ValueError:

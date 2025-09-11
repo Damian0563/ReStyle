@@ -1,102 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link rel="icon" href="{{url_for('static',filename='images/logo.webp')}}" type="image/x-icon">
-    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
-    <title>ReStyle</title>
+    <title>ReStyle - Messages</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static',filename='images/logo.webp')}}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .link:hover{
+            background-color: #3B71CA !important;
+            color: #fff !important;
+        }
+        .link{
+            transition: ease-in-out 0.5s;
+        }
+    </style>
 </head>
 
-<body>
-    <a href="/home/{{id}}/0"><img src="{{url_for('static',filename='images/home.webp')}}" style="width: 5%;height: 5%;margin: 3%;"></a>
-    
-    {% if picture=="default" %}
-        <img src="{{url_for('static',filename='images/default.webp')}}" class="Picture" style="left:20%">
-        <div style="position: absolute;top:6%;left:40%;font-size: 3rem;">{{username}}'s messages</div>
-    {% else %}
-        <img src="{{url_for('service.get_image',id=id)}}" class="Picture" style="left:20%">
-        <div style="position: absolute;top:6%;left:40%;font-size: 3rem;">{{username}}'s messages</div>
-    {% endif %}
+<body class="bg-light d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-light bg-white shadow-sm px-3">
+        <a href="/home/{{id}}/0" class="navbar-brand">
+            <img src="{{url_for('static',filename='images/home.webp')}}" alt="Home" style="height: 36px;">
+        </a>
+        <div class="d-flex align-items-center">
+            {% if picture=="default" %}
+                <img src="{{url_for('static',filename='images/default.webp')}}" class="rounded-circle border" style="width:48px; height:48px; object-fit:cover;">
+            {% else %}
+                <img src="{{url_for('service.get_image',id=id)}}" class="rounded-circle border" style="width:48px; height:48px; object-fit:cover;">
+            {% endif %}
+            <h5 class="ms-3 mb-0 fw-bold">{{username}}'s Messages</h5>
+        </div>
+    </nav>
 
-    {% with messages = get_flashed_messages() %}
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
-                    <div class="flashed-toast popup alert alert-warning alert-dismissible fade show justify-content-center position-fixed top-0 start-50 translate-middle-x mt-4" id="pop" role="alert" style="max-width: 350px; z-index: 2000; width: 90vw; left: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);background-color: red;">
-                        <span style="background-color: red;color:black;display:block;width:100%;text-align:center;">{{ message }}</span>
-                        <img src="{{url_for('static',filename='images/x.webp')}}" style="position:absolute;top:0.1rem;right:0.5rem;background-color: red;width:1.5rem;height:1.5rem;cursor:pointer;" onclick="this.closest('.popup').style.display='none'">
+                    <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endfor %}
             {% endif %}
-    {% endwith %}
+        {% endwith %}
+    </div>
 
-    
-    <div style="display: flex; align-items: center; gap: 0.3rem; margin: 2% 0; position: relative;">
-        <img 
-            src="{{url_for('static',filename='images/compose.webp')}}" 
-            class="compose" 
-            style="height: 44px; width: 44px; cursor: pointer; transition: transform 0.15s;" 
-            onclick="StartConvo()" 
-            onmouseover="this.style.transform='scale(1.08)'" 
-            onmouseout="this.style.transform='scale(1)'"
-            alt="Compose"
-        >
-        <div 
-            class="start-convo" 
-            id="convo" 
-            style="display: none; width:20vw; background: #f9f9f9; height:30px; border: 1px solid #e0e0e0; border-radius: 0.7rem; padding: 0.5rem 0.8rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); z-index: 1001; position: absolute; right: 80px;"
-        >
-            <form method="post" autocomplete="off" style="display: flex; align-items: center; gap: 0.3rem;background-color: white;">
-                <input 
-                    placeholder="User to connect" 
-                    name="link" 
-                    style="flex: 1 1 0; background: #fff; border: 1px solid #ccc; border-radius: 0.2rem; padding: 0.3rem 0.3rem; font-size: 0.92rem; outline: none; transition: border 0.2s; min-width: 0;"
-                    onfocus="this.style.borderColor='#888'"
-                    onblur="this.style.borderColor='#ccc'"
-                >
-                <button 
-                    type="submit"
-                    class="avgButton" 
-                    onclick="Collapse()" 
-                    style="background: #4a90e2; color: #fff; border: none; border-radius: 0.5rem; padding: 0.3rem 0.7rem; font-size: 0.92rem; cursor: pointer; transition: background 0.18s;"
-                    onmouseover="this.style.background='#357ab8'"
-                    onmouseout="this.style.background='#4a90e2'"
-                >
-                    Start
-                </button>
+    <div class="container my-3 d-flex justify-content-center">
+        <button class="btn btn-outline-primary d-flex align-items-center gap-2" onclick="toggleConvo()">
+            <img src="{{url_for('static',filename='images/compose.webp')}}" alt="Compose" style="height:22px;">
+            Start Conversation
+        </button>
+        <div id="convo" class="ms-3" style="display:none; max-width:400px; width:100%;">
+            <form method="post" autocomplete="off" class="input-group">
+                <input type="text" name="link" placeholder="User to connect" class="form-control" required>
+                <button type="submit" class="btn btn-primary" onclick="collapseConvo()">Start</button>
             </form>
         </div>
     </div>
 
-    
-    <div style="display: flex; flex-direction: row; min-height: 90vh; width: 100%; gap: 1vw;">
-        <div class="your-chats" style="flex: 0 0 260px; max-width: 320px; min-width: 180px; background: #fff; border-radius: 1.2rem 0 0 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; padding: 2% 1.5%; display: flex; flex-direction: column; align-items: stretch;">
-            <!-- <h3 style="text-align:center; font-size: 1.3rem; font-weight: bold; margin-bottom: 1.5rem;"></h3> -->
-            {% if all_chats %}
-                {% for chat in all_chats %}
-                    <a href="/messages/{{id}}/{{chat[1]}}/{{chat[2]}}" style="text-decoration: none; color: black;background-color: white;">
-                        <div class="chat" style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1.2rem; padding: 0.7rem 1rem; border-radius: 0.7rem; background: #f7f7f7; border: 1px solid #e0e0e0; transition: background 0.2s;">
-                            <img src="{{url_for('service.get_image',id=chat[0])}}" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">
-                            <span style="font-size: 1rem;background-color: white;"><strong style="background-color: white;">{{chat[1]}}</strong></span>
-                        </div>
-                    </a>
-                {% endfor %}
-            {% else %}
-                <div style="text-align: center; color: #888; margin-top: 2rem;background-color: white;">No chat history</div>
-            {% endif %}
-        </div>
-        <div class="chat_box" style="flex: 1 1 0; background-color: #fff; border-radius: 0 1.2rem 1.2rem 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; padding: 2% 2.5%; min-width: 0; min-height: 400px;">
-            
+    <div class="flex-grow-1 d-flex justify-content-center">
+        <div class="card shadow-sm border-0" style="width: 100%; max-width: 600px;">
+            <div class="card-body p-3">
+                {% if all_chats %}
+                    {% for chat in all_chats %}
+                        <a href="/messages/{{id}}/{{chat[1]}}/{{chat[2]}}" class="text-decoration-none text-dark">
+                            <div class="d-flex align-items-center p-2 mb-2 rounded hover-shadow-sm link bg-light">
+                                <img src="{{url_for('service.get_image',id=chat[0])}}" class="rounded-circle border" style="width:40px; height:40px; object-fit:cover;">
+                                <span class="ms-2 fw-semibold">{{chat[1]}}</span>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted text-center mt-3">No chat history</p>
+                {% endif %}
+            </div>
         </div>
     </div>
+
     <script>
-        function StartConvo(){
-            document.getElementById('convo').style.display="flex"
+        function toggleConvo() {
+            const convo = document.getElementById('convo');
+            convo.style.display = convo.style.display === "none" ? "block" : "none";
         }
-        function Collapse(){
-            document.getElementById('convo').style.display='none'
+        function collapseConvo() {
+            document.getElementById('convo').style.display='none';
         }
     </script>
-</body>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
