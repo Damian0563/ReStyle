@@ -38,10 +38,10 @@ def main(id,page):
                 j=0
                 for entry in products.find():
                     if str(entry['user'])!=str(id):
-                        if j>=8*page:
+                        if j>=12*page:
                             listings.append(entry)
                             i+=1
-                            if i>page+7:
+                            if i>page+11:
                                 break
                         j+=1
                 return render_template('service.html',id=id,page=page,all_chats=all_chats,listings=listings)
@@ -53,10 +53,10 @@ def main(id,page):
             for entry in products.find():
                 #print(entry)
                 if str(entry['user'])!=str(id):
-                    if j>=8*page:
+                    if j>=11*page:
                         listings.append(entry)
                         i+=1
-                        if i>page+7:
+                        if i>page+11:
                             break
                     j+=1
             return render_template('service.html',id=id,page=0,all_chats=all_chats,listings=listings)

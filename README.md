@@ -3,14 +3,15 @@ The app was built and is maintained by Damian Piechocki.
 ReStyle is a web service, which allows users to create accounts,
 post products on a marketplace and communicate with other potential customers or sellers in real time.
 Users have the ability to manipulate their listings as well as to edit their profile information.
-<strong>Please do not judge the site on UI too much- I have had used pure CSS for styling, which at the point of UI refactoring/optimisations turned out 
-to be more gruelsome than initially expected. Thank you for your understanding.</strong>
 
-<img src="static/images/landing.png" width="600">
-<img src="static/images/sign.png" width="600">
-<img src="static/images/profile.png" width="600">
-<img src="static/images/main.png" width="600">
-<img src="static/images/messages.png" width="600">
+<img src="demo/landing.png" width="600">
+<img src="demo/main.png" width="600">
+<img src="demo/user.png" width="600">
+<img src="demo/my_listings.png" width="600">
+<div width="900">
+  <img src="demo/pov1.png" width="450">
+  <img src="demo/pov2.png" width="450">
+</div>
 
 ## Technologies in use
   -Mongodb

@@ -331,11 +331,10 @@
         function Collapse(){
             document.getElementById('convo').style.display='none'
         }
-        function display(user,message){
+        function display(user,message,type){
             const div=document.createElement('div')
             div.textContent=`${message}`
-            if (user===document.getElementById('usertemp').value) div.classList.add('you') 
-            else div.classList.add('me') 
+            div.classList.add(type)
             div.classList.add("message")
             document.getElementById('chat-messages-container').append(div)
             Load()
@@ -347,21 +346,21 @@
         let socket=io()
         socket.connect(`http://127.0.0.1:5000/messages/${username}/${connect}/${room}`)
         socket.on("connect", function () {
-            //console.log("Connected to server!");
+            console.log("Connected to server!");
             socket.emit('join-room',room)
-            //console.log("Joined room: ",room)
+            console.log("Joined room: ",room)
         });
 
         socket.on('error', function (error) {
-            //console.error("Socket error received:", error);
+            console.error("Socket error received:", error);
         });
 
         socket.on('send-message', (message) => {
-            display(user3, message['text']);
+            display(user3, message['text'],'you');
         });
 
         socket.on('receive-message',(message)=>{
-            display(connect,message['text'])
+            display(connect,message['text'],'me')
         })
         document.getElementById("sendBtn").addEventListener("click", function(event) {
             event.preventDefault();
@@ -374,7 +373,7 @@
             .then(data => {
                 //console.log(data)
                 socket.emit('send-message',{"text":message,"room":room});
-                //console.log(`Emitted: {text: ${message},room: ${room}}`)
+                console.log(`Emitted: {text: ${message},room: ${room}}`)
             })
             .catch(error => console.error("Error:", error));
             document.getElementById("mess").value = "";

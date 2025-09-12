@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -121,4 +121,176 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ReStyle - Profile</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{{url_for('static',filename='images/logo.webp')}}" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #fdfaf5; /* soft beige */
+    }
+    .profile-img {
+      max-width: 280px;
+      border: 4px solid #dee2e6;
+      object-fit: cover;
+    }
+    .profile-card {
+      background: #fffdf8;
+      border: 1px solid #e2dfda;
+      border-radius: 1rem;
+    }
+    .form-control[readonly] {
+      background-color: #f8f9fa;
+      opacity: 1;
+    }
+    .listing-card {
+        border: 1px solid #198754;
+        border-radius: 1rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        min-height: 450px;   /* makes each card taller */
+    }
+    .listing-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    .delete-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .delete-btn img {
+      width: 18px;
+      height: 18px;
+    }
+    .listing-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0.8rem;
+      border: 1px solid #e0e0e0;
+    }
+  </style>
+</head>
+
+<body class="min-vh-100 d-flex flex-column bg-white">
+
+  <div class="container py-4 flex-grow-1">
+    
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible fade show mx-auto shadow-sm" style="max-width: 400px;" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="/home/{{id}}/0" {% if bool!='true' %} class="d-none"{% endif %}>
+        <img src="{{url_for('static',filename='images/home.webp')}}" alt="Home" style="width:50px;height:50px;">
+      </a>
+      <a href="/home/{{inc}}/0" {% if bool=='true' %} class="d-none"{% endif %}>
+        <img src="{{url_for('static',filename='images/home.webp')}}" alt="Home" style="width:50px;height:50px;">
+      </a>
+    </div>
+
+    <!-- Profile section -->
+    <div class="row g-4 mb-5 align-items-center">
+      <div class="col-md-4 text-center">
+        {% if picture=="default" %}
+          <img src="{{url_for('static',filename='images/default.webp')}}" class="profile-img rounded-circle shadow">
+        {% else %}
+          <img src="{{url_for('service.get_image',id=id)}}" class="profile-img rounded-circle shadow">
+        {% endif %}
+      </div>
+      <div class="col-md-8">
+        <div class="profile-card p-4 shadow-sm">
+          <form method="POST" name="info" enctype="multipart/form-data" autocomplete="off">
+            
+            <div class="d-flex gap-2 mb-4">
+              <button type="button" class="btn btn-outline-primary" onclick="editInfo()">Edit</button>
+              <button type="submit" class="btn btn-success" onclick="saveInfo()">Save</button>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Username</label>
+              <input type="text" value="{{username}}" name="username" id="username" class="form-control" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Email</label>
+              <input type="email" value="{{email}}" name="email" id="email" class="form-control" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">About</label>
+              <textarea name="about" id="about" rows="4" class="form-control" readonly>{{about}}</textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Profile Picture</label>
+              <input type="file" name="profile_image" class="form-control">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <h4 class="fw-bold mb-3">Your Listings</h4>
+    <div class="row g-4">
+    {% if my_listings %}
+        {% for listing in my_listings %}
+            <div class="col-12 col-md-6"> <!-- 2 per row on md+, full width on mobile -->
+                <div class="listing-card card h-100 position-relative p-4">
+                <a href="{{url_for('service.delete_product',del_id=listing['gen_id'],id=id,page=page,bool=bool,inc=inc)}}" class="delete-btn">
+                    <img src="{{url_for('static',filename='images/x.webp')}}" alt="Delete">
+                </a>
+                <img src="{{url_for('service.get_image_prod',id=listing['gen_id'])}}" 
+                    class="listing-img me-3" 
+                    style="object-fit:cover; height: 280px;">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-2">{{ listing['product_name'] }}</h5>
+                    <div class="text-muted">by {{ listing['username'] }}</div>
+                </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+            <div class="alert alert-warning text-center">No listings to display!</div>
+        {% endif %}
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+      <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page-1 if page>0 else 0) }}" class="btn btn-outline-dark mx-2">Previous</a>
+      <a href="{{ url_for('service.profile',id=id,bool=bool,inc=inc,page=page+1) }}" class="btn btn-dark mx-2">Next</a>
+    </div>
+  </div>
+
+  <script>
+    function editInfo() {
+      document.getElementById('username').readOnly = false;
+      document.getElementById('email').readOnly = false;
+      document.getElementById('about').readOnly = false;
+    }
+    function saveInfo() {
+      document.getElementById('username').readOnly = true;
+      document.getElementById('email').readOnly = true;
+      document.getElementById('about').readOnly = true;
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
